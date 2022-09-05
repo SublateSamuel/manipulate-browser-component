@@ -66,7 +66,7 @@ assert web_interface.title == "Google"
 
 3 — Example using class as an instance remote:
 
-For this you need to have installed a **Chrome** or **Chromium** webdriver compatible with the browser version installed on your machine
+For this you need have access to an infrastructure of remote browsers, for example: Selenoid
 
 ```python
 from UserInterfaceBrowser import UserInterfaceBrowser
