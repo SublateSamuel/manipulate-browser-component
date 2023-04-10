@@ -1,0 +1,80 @@
+version: '3.9'
+services:
+  pyuser:
+    build: ./
+    hostname: pyuser
+    container_name: pyuser
+    volumes:
+      - ./extensions:/app/extensions
+      - ./webdriver:/app/webdriver
+      - ./manipule_browser:/app
+    ports:
+      - "9222:9222"
+    dns: 1.1.1.1
+    networks:
+      selenoid:
+        aliases:
+          - selenoid
+    logging:
+      options:
+        max-size: "50m"
+        max-file: "3"
+  selenoid-ui:
+    image: aerokube/selenoid-ui:1.10.9
+    hostname: "selenoid-ui"
+    container_name: "selenoid-ui"
+    networks:
+      selenoid:
+        aliases:
+          - selenoid
+    ports:
+      - "8080:8080"
+    dns: 1.1.1.1
+    logging:
+        driver: "json-file"
+        options:
+          max-size: "10m"
+          max-file: "3"
+    command:
+      [
+        "--selenoid-uri",
+        "http://selenoid:4444",
+        "--allowed-origin",
+        "*"
+      ]
+    environment:
+      TZ: "America/Sao_Paulo"
+  selenoid:
+      image: aerokube/selenoid:1.10.9
+      hostname: "selenoid"
+      container_name: "selenoid"
+      networks:
+        selenoid:
+          aliases:
+            - selenoid
+      dns: 1.1.1.1
+      ports:
+        - "4444:4444"
+      volumes:
+        - "./selenoid/browsers/browsers.json:/etc/selenoid/browsers.json"
+        - "/var/run/docker.sock:/var/run/docker.sock"
+        - "./selenoid/video:/opt/selenoid/video"
+      environment:
+        OVERRIDE_VIDEO_OUTPUT_DIR: "${PWD}/docker/selenoid/video"
+        TZ: "America/Sao_Paulo"
+      command:
+        [
+          "-conf",
+          "/etc/selenoid/browsers.json",
+          "-container-network",
+          "selenoid"
+        ]
+      logging:
+        driver: "json-file"
+        options:
+          max-size: "10m"
+          max-file: "3"
+networks:
+  selenoid:
+    name: selenoid
+    external: true

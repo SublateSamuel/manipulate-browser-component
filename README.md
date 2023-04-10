@@ -17,16 +17,18 @@ Browser component gives us the facility to define if we are going to use a local
 
 The component has the following technologies in its core.
 
-- [Python 3.10](https://www.python.org/downloads/release/python-3100/) as main language
+- [Python 3.11](https://www.python.org/downloads/release/python-3100/) as main language
 - [Selenium](https://selenium-python.readthedocs.io/) 
 browser manipulation tools
 ## Getting Started
 
 ### Requirements
 
-- Python 3.10^
+- Python 3.11^
+- Poetry packeage manager
 - Git
 - Selenium Python Packed
+
 
 ### Install
 
@@ -34,6 +36,7 @@ browser manipulation tools
 
 ```shell
 git clone git@github.com:SublateSamuel/manipulate-browser-component.git
+>>>>>>> main
 ```
 
 ### How to use
@@ -46,7 +49,7 @@ this class can be instantiated with the necessary parameters to start a browser
 
 | Parameter          | type    | Descrição                                                                        |
 |---------------|--------|------|
-| `Host Executor`          | string| host executor takes full path of local webdriver or host of remote webdriver                          |
+| `Host`          | string| host executor takes full path of local webdriver or host of remote webdriver                          |
 | `Remote Browser`        | bool| if the webdriver is remote, this field must be **True** , parameter is **False** by default                               |
 
 2 — Example using class as an instance local:
@@ -54,13 +57,15 @@ this class can be instantiated with the necessary parameters to start a browser
 For this you need to have installed a **Chrome** or **Chromium** webdriver compatible with the browser version installed on your machine
 
 ```python
-from UserInterfaceBrowser import UserInterfaceBrowser
+from manipule_browser.user_interface_browser import UserInterfaceBrowser
+from manipule_browser.drivers.driver_types import DriverTypes
+from manipule_browser.path import WEBDRIVER_DIR
 
-web_interface = UserInterfaceBrowser(host_executor="my_full_path/local/webdriver.exe")
+browser = UserInterfaceBrowser(host=WEBDRIVER_DIR / 'chromedriver', browser_type=DriverTypes.LOCAL_CHROME)
+browser.visit('https://google.com')
 
-web_interface.visit("https.google.com")
 
-assert web_interface.title == "Google"
+assert browser.title == "Google"
 
 ```
 
@@ -69,12 +74,14 @@ assert web_interface.title == "Google"
 For this you need have access to an infrastructure of remote browsers, for example: Selenoid
 
 ```python
-from UserInterfaceBrowser import UserInterfaceBrowser
+from manipule_browser.user_interface_browser import UserInterfaceBrowser
+from manipule_browser.drivers.driver_types import DriverTypes
+from manipule_browser.path import WEBDRIVER_DIR
 
-web_interface = UserInterfaceBrowser(host_executor="http://localhost:4444", remote_browser=True)
+browser = UserInterfaceBrowser(host='http://selenoid:4444', browser_type=DriverTypes.LOCAL_CHROME)
+browser.visit('https://google.com')
 
-web_interface.visit("https.google.com")
 
-assert web_interface.title == "Google"
+assert browser.title == "Google"
 
 ```
