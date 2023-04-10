@@ -5,8 +5,8 @@ description = ""
 authors = ["Samuel Sublate <samuelsublate.dev@gmail.com>"]
 
 [tool.poetry.dependencies]
-python = "^3.10"
-selenium = "^4.4.3"
+python = "^3.11"
+selenium = "^4.8.0"
 
 [tool.poetry.dev-dependencies]
 
