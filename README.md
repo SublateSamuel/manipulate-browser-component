@@ -35,7 +35,8 @@ browser manipulation tools
 1 — Clone the repository
 
 ```shell
-git clone https://github.com/SublateSamuel/manipulate-browser-component
+git clone git@github.com:SublateSamuel/manipulate-browser-component.git
+>>>>>>> main
 ```
 
 ### How to use
