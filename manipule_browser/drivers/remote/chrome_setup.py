@@ -9,7 +9,7 @@ class ChromeSetup(webdriver.ChromeOptions):
         self._version = version
         self.add_extensions_in_browser() if extension else None
     
-    def capabilities(self, name_connection=None, enable_vnc=True, enable_video=True, browser_name='browser_rec'
+    def capabilities(self, name_connection=None, enable_vnc=True, enable_video=False, browser_name='browser_rec'
         ):
         return {
             "browserName": "chrome",
