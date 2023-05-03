@@ -9,6 +9,7 @@ class RemoteDriver(webdriver.Remote):
     
     def __init__(self, host: str, driver_type: DriverTypes, extensions: bool, version: str) -> None:
         self._setup_driver = self._select_options_by_driver_type(extensions, version, driver_type)
+        print(self._setup_driver.capabilities())
         super().__init__(
             command_executor=host, 
             desired_capabilities=self._setup_driver.capabilities()
